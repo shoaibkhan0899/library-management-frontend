@@ -1,0 +1,74 @@
+<main class="grid min-h-screen place-items-center bg-[#edf2eb] bg-[repeating-linear-gradient(135deg,transparent_0_23px,rgba(29,76,64,0.03)_24px_25px)] px-4 py-8 text-[#172f2b]">
+	<section class="flex min-h-[620px] w-full max-w-[480px] flex-col justify-between rounded-lg border border-[#d5dfd4] bg-[#fffefa] px-6 py-6 shadow-[0_18px_55px_rgba(23,47,43,0.09)] sm:px-12 sm:py-[34px]" aria-labelledby="login-title">
+		<a class="inline-flex w-fit items-center gap-2.5 text-[15px] font-bold text-[#173c34] no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]" routerLink="/login" aria-label="Campus Library home">
+			<span class="grid aspect-square w-[34px] place-items-center rounded-full bg-[#d7eee6] font-serif text-xs text-[#175c4b]" aria-hidden="true">CL</span>
+			<span>Campus Library</span>
+		</a>
+
+		<div class="my-9 sm:my-11">
+			<p class="mb-3 text-[11px] font-bold tracking-[1.4px] text-[#ba573f]">YOUR LIBRARY, ONLINE</p>
+			<h1 class="m-0 font-serif text-[35px] font-normal leading-tight text-[#173c34] sm:text-[40px]" id="login-title">Welcome back.</h1>
+			<p class="mb-[30px] mt-3 text-sm leading-relaxed text-[#68746d]">Sign in to browse the collection and manage your books.</p>
+
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+				<div class="mb-5">
+					<label class="mb-2 block text-[13px] font-semibold text-[#293d37]" for="email">Email address</label>
+					<input
+						class="min-h-12 w-full rounded border border-[#cbd6ce] bg-white px-[13px] text-sm text-[#172f2b] outline-none transition focus:border-[#24745e] focus:ring-4 focus:ring-[#24745e]/15 aria-invalid:border-[#b94d3b]"
+						id="email"
+						type="email"
+						formControlName="email"
+						autocomplete="username"
+						placeholder="you@example.com"
+						[attr.aria-invalid]="loginForm.controls.email.invalid && (loginForm.controls.email.touched || submitted)"
+						aria-describedby="email-error"
+					/>
+					<p
+						class="mt-[7px] text-xs text-[#a53c30]"
+						id="email-error"
+						[hidden]="!loginForm.controls.email.hasError('required') || !(loginForm.controls.email.touched || submitted)"
+					>
+						Enter your email address.
+					</p>
+					<p
+						class="mt-[7px] text-xs text-[#a53c30]"
+						[hidden]="!loginForm.controls.email.hasError('email') || !(loginForm.controls.email.touched || submitted)"
+					>
+						Enter a valid email address.
+					</p>
+				</div>
+
+				<div class="mb-5">
+					<label class="mb-2 block text-[13px] font-semibold text-[#293d37]" for="password">Password</label>
+					<input
+						class="min-h-12 w-full rounded border border-[#cbd6ce] bg-white px-[13px] text-sm text-[#172f2b] outline-none transition focus:border-[#24745e] focus:ring-4 focus:ring-[#24745e]/15 aria-invalid:border-[#b94d3b]"
+						id="password"
+						type="password"
+						formControlName="password"
+						autocomplete="current-password"
+						placeholder="Enter your password"
+						[attr.aria-invalid]="loginForm.controls.password.invalid && (loginForm.controls.password.touched || submitted)"
+						aria-describedby="password-error"
+					/>
+					<p
+						class="mt-[7px] text-xs text-[#a53c30]"
+						id="password-error"
+						[hidden]="!loginForm.controls.password.hasError('required') || !(loginForm.controls.password.touched || submitted)"
+					>
+						Enter your password.
+					</p>
+				</div>
+
+				<button class="mt-1 flex min-h-[49px] w-full items-center justify-between rounded bg-[#1d5b4b] px-4 text-sm font-semibold text-[#fffefa] transition hover:-translate-y-px hover:bg-[#164b3d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]" type="submit">Sign in <span aria-hidden="true">&#8594;</span></button>
+
+				<p class="mt-3.5 border-l-[3px] border-[#d1784c] bg-[#fff3e9] px-3 py-[11px] text-xs leading-relaxed text-[#71432d]" role="status" [hidden]="!submitted || loginForm.invalid">
+					The form is valid, but sign-in is not connected to an authentication service yet.
+				</p>
+			</form>
+
+			<p class="mt-6 text-center text-[13px] text-[#68746d]">New to the library? <a class="font-bold text-[#1d5b4b] underline decoration-[#8db4a6] underline-offset-[3px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]" routerLink="/register">Create an account</a></p>
+		</div>
+
+		<p class="m-0 text-center font-serif text-[13px] italic text-[#859089]">A quieter place to find your next great read.</p>
+	</section>
+</main>
