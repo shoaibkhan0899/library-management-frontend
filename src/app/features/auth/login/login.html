@@ -40,16 +40,30 @@
 
 				<div class="mb-5">
 					<label class="mb-2 block text-[13px] font-semibold text-[#293d37]" for="password">Password</label>
-					<input
-						class="min-h-12 w-full rounded border border-[#cbd6ce] bg-white px-[13px] text-sm text-[#172f2b] outline-none transition focus:border-[#24745e] focus:ring-4 focus:ring-[#24745e]/15 aria-invalid:border-[#b94d3b]"
-						id="password"
-						type="password"
-						formControlName="password"
-						autocomplete="current-password"
-						placeholder="Enter your password"
-						[attr.aria-invalid]="loginForm.controls.password.invalid && (loginForm.controls.password.touched || submitted)"
-						aria-describedby="password-error"
-					/>
+					<div class="relative">
+						<input
+							class="min-h-12 w-full rounded border border-[#cbd6ce] bg-white px-[13px] pr-12 text-sm text-[#172f2b] outline-none transition focus:border-[#24745e] focus:ring-4 focus:ring-[#24745e]/15 aria-invalid:border-[#b94d3b]"
+							id="password"
+							[type]="showPassword ? 'text' : 'password'"
+							formControlName="password"
+							autocomplete="current-password"
+							placeholder="Enter your password"
+							[attr.aria-invalid]="loginForm.controls.password.invalid && (loginForm.controls.password.touched || submitted)"
+							aria-describedby="password-error"
+						/>
+						<button
+							class="absolute right-3 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded text-[#68746d] hover:bg-[#edf2eb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24745e]"
+							type="button"
+							[attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+							(click)="togglePasswordVisibility()"
+						>
+							@if (showPassword) {
+								<svg lucideEyeOff size="18" aria-hidden="true"></svg>
+							} @else {
+								<svg lucideEye size="18" aria-hidden="true"></svg>
+							}
+						</button>
+					</div>
 					<p
 						class="mt-[7px] text-xs text-[#a53c30]"
 						id="password-error"
@@ -59,10 +73,12 @@
 					</p>
 				</div>
 
-				<button class="mt-1 flex min-h-[49px] w-full items-center justify-between rounded bg-[#1d5b4b] px-4 text-sm font-semibold text-[#fffefa] transition hover:-translate-y-px hover:bg-[#164b3d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]" type="submit">Sign in <span aria-hidden="true">&#8594;</span></button>
+				<button class="mt-1 flex min-h-[49px] w-full items-center justify-between rounded bg-[#1d5b4b] px-4 text-sm font-semibold text-[#fffefa] transition hover:-translate-y-px hover:bg-[#164b3d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57] disabled:cursor-not-allowed disabled:opacity-70" type="submit" [disabled]="isSubmitting">
+					{{ isSubmitting ? 'Signing in...' : 'Sign in' }} <span aria-hidden="true">&#8594;</span>
+				</button>
 
-				<p class="mt-3.5 border-l-[3px] border-[#d1784c] bg-[#fff3e9] px-3 py-[11px] text-xs leading-relaxed text-[#71432d]" role="status" [hidden]="!submitted || loginForm.invalid">
-					The form is valid, but sign-in is not connected to an authentication service yet.
+				<p class="mt-3.5 border-l-[3px] border-[#b94d3b] bg-[#fff3e9] px-3 py-[11px] text-xs leading-relaxed text-[#71432d]" role="alert" [hidden]="!errorMessage">
+					{{ errorMessage }}
 				</p>
 			</form>
 
