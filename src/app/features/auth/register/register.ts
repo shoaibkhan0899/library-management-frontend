@@ -88,7 +88,7 @@ export class Register {
     this.authService.register(request).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login'], { queryParams: { registered: 'true' } });
       },
       error: () => {
         this.isSubmitting = false;

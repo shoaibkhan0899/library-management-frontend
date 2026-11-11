@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LucideEye, LucideEyeOff } from '@lucide/angular';
 import { AuthService } from '../../../services/auth.service';
 
@@ -15,12 +15,18 @@ export class Login {
   submitted = false;
   isSubmitting = false;
   errorMessage = '';
+  successMessage = '';
   showPassword = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
+    private route: ActivatedRoute,
+  ) {
+    if (this.route.snapshot.queryParamMap.get('registered') === 'true') {
+      this.successMessage = 'Registration successful. Please log in.';
+    }
+  }
 
   readonly loginForm = new FormGroup({
     email: new FormControl('', {
@@ -46,6 +52,7 @@ export class Login {
     this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
+        this.authService.saveRole(response.role);
         this.isSubmitting = false;
 
         const dashboardRoute = response.role === 'ADMIN' ? '/admin/dashboard' : '/student/dashboard';
