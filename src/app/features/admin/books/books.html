@@ -1,0 +1,215 @@
+
+<main class="min-h-[calc(100vh-73px)] bg-stone-100 px-4 py-8 text-stone-900 sm:px-6 lg:px-8">
+  <section class="mx-auto max-w-7xl">
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Library collection</p>
+        <h1 class="mt-2 text-3xl font-bold text-stone-900">Books Management</h1>
+      </div>
+
+      <button
+        type="button"
+        (click)="openAddForm()"
+        class="inline-flex min-h-11 items-center justify-center rounded-md bg-emerald-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+      >
+        Add New Book
+      </button>
+    </div>
+
+    @if (successMessage) {
+      <p class="mb-5 border-l-4 border-emerald-700 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900" role="status">
+        {{ successMessage }}
+      </p>
+    }
+
+    @if (errorMessage) {
+      <p class="mb-5 border-l-4 border-red-700 bg-red-50 px-4 py-3 text-sm font-medium text-red-900" role="alert">
+        {{ errorMessage }}
+      </p>
+    }
+
+    @if (showAddForm) {
+      <section class="mb-6 rounded-lg border border-stone-200 bg-white p-5 shadow-sm sm:p-6">
+        <div class="mb-5 border-b border-stone-200 pb-4">
+          <h2 class="text-xl font-bold text-stone-900">
+            {{ editingBookId !== null ? 'Edit Book' : 'Add a new book' }}
+          </h2>
+          <p class="mt-1 text-sm text-stone-500">
+            {{ editingBookId !== null ? 'Update the details for this book.' : 'Enter the book details to add it to the collection.' }}
+          </p>
+        </div>
+
+        <form [formGroup]="addBookForm" (ngSubmit)="addBook()" class="grid gap-5 md:grid-cols-2">
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-stone-700" for="book-title">Book Title</label>
+            <input
+              id="book-title"
+              type="text"
+              formControlName="title"
+              placeholder="Enter book title"
+              class="min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10"
+            />
+            @if (addBookForm.controls.title.touched && addBookForm.controls.title.invalid) {
+              <small class="mt-1.5 block text-xs text-red-700">Title is required.</small>
+            }
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-stone-700" for="book-author">Author</label>
+            <input
+              id="book-author"
+              type="text"
+              formControlName="author"
+              placeholder="Enter author name"
+              class="min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10"
+            />
+            @if (addBookForm.controls.author.touched && addBookForm.controls.author.invalid) {
+              <small class="mt-1.5 block text-xs text-red-700">Author is required.</small>
+            }
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-stone-700" for="book-isbn">ISBN</label>
+            <input
+              id="book-isbn"
+              type="text"
+              formControlName="isbn"
+              placeholder="Enter ISBN"
+              class="min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10"
+            />
+            @if (addBookForm.controls.isbn.touched && addBookForm.controls.isbn.invalid) {
+              <small class="mt-1.5 block text-xs text-red-700">ISBN is required.</small>
+            }
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-stone-700" for="book-category">Category</label>
+            <input
+              id="book-category"
+              type="text"
+              formControlName="category"
+              placeholder="Enter category"
+              class="min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10"
+            />
+            @if (addBookForm.controls.category.touched && addBookForm.controls.category.invalid) {
+              <small class="mt-1.5 block text-xs text-red-700">Category is required.</small>
+            }
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-stone-700" for="book-quantity">Quantity</label>
+            <input
+              id="book-quantity"
+              type="number"
+              formControlName="quantity"
+              min="1"
+              class="min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 outline-none transition focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10"
+            />
+            @if (addBookForm.controls.quantity.touched && addBookForm.controls.quantity.invalid) {
+              <small class="mt-1.5 block text-xs text-red-700">Quantity must be at least 1.</small>
+            }
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-stone-700" for="book-image">Book Cover Image URL</label>
+            <input
+              id="book-image"
+              type="url"
+              formControlName="imageUrl"
+              placeholder="Enter image URL (optional)"
+              class="min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:ring-4 focus:ring-emerald-700/10"
+            />
+          </div>
+
+          <div class="flex flex-wrap gap-3 md:col-span-2">
+            <button
+              type="submit"
+              [disabled]="submitting"
+              class="min-h-11 rounded-md bg-emerald-900 px-5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {{ submitting
+                ? (editingBookId !== null ? 'Updating...' : 'Adding...')
+                : (editingBookId !== null ? 'Update Book' : 'Add Book') }}
+            </button>
+
+            <button
+              type="button"
+              (click)="cancelAddForm()"
+              [disabled]="submitting"
+              class="min-h-11 rounded-md border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+    }
+
+    <section class="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+      @if (loading) {
+        <div class="px-6 py-12 text-center text-sm text-stone-500">Loading books...</div>
+      } @else if (books.length === 0) {
+        <div class="px-6 py-12 text-center text-sm text-stone-500">No books found.</div>
+      } @else {
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[850px] border-collapse text-left">
+            <thead class="border-b border-stone-200 bg-stone-50">
+              <tr>
+                <th class="w-24 px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Cover</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">ID</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Title</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Author</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">ISBN</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Category</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Quantity</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-stone-200">
+              @for (book of books; track book.id) {
+                <tr class="transition-colors hover:bg-stone-50">
+                  <td class="px-4 py-3">
+                    <img
+                      class="h-20 w-14 rounded border border-stone-200 object-cover shadow-sm"
+                      [src]="book.imageUrl || fallbackImageUrl"
+                      [alt]="book.title + ' cover'"
+                      (error)="onImageError($event)"
+                    />
+                  </td>
+                  <td class="px-4 py-3 text-sm text-stone-500">{{ book.id }}</td>
+                  <td class="px-4 py-3 text-sm font-semibold text-stone-900">{{ book.title }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ book.author }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ book.isbn }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ book.category }}</td>
+                  <td class="px-4 py-3 text-sm font-medium text-stone-700">{{ book.quantity }}</td>
+                  <td class="px-4 py-3">
+                    @if (book.id !== undefined) {
+                      <div class="flex items-center gap-2">
+                        <button
+                          type="button"
+                          (click)="openEditForm(book)"
+                          class="min-h-9 rounded-md border border-emerald-800 px-3 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          (click)="deleteBook(book)"
+                          [disabled]="deletingBookId !== null"
+                          class="min-h-9 rounded-md border border-red-300 px-3 text-sm font-semibold text-red-800 transition hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {{ deletingBookId === book.id ? 'Deleting...' : 'Delete' }}
+                        </button>
+                      </div>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  </section>
+</main>
