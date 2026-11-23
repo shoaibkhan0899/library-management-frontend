@@ -12,12 +12,18 @@ import { environment } from '../../environments/environment';
 export class BookService {
 
   private apiUrl = `${environment.apiUrl}/admin/books`;
+  private studentApiUrl = `${environment.apiUrl}/student/books`;
 
   constructor(private http: HttpClient) {}
 
   // Add Book
   addBook(book: Book): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
+  }
+
+  // Get All Books for students
+  getStudentBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(this.studentApiUrl);
   }
 
   // Get All Books
