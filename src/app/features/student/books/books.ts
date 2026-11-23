@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-student-books',
-  template: '<main><h1>Books</h1></main>',
+  standalone: true,
+  templateUrl: './books.html',
+  styleUrl: './books.css',
 })
 export class StudentBooks {}
