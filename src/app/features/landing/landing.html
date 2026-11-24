@@ -4,10 +4,12 @@
 			<p class="mb-4 text-xs font-bold tracking-[1.4px] text-[#ba573f]">ONE LIBRARY, OPEN TO EVERY READER</p>
 			<h1 class="m-0 max-w-2xl font-serif text-5xl font-normal leading-tight text-[#173c34] sm:text-6xl">Welcome to Campus Library</h1>
 			<p class="mt-6 max-w-xl text-base leading-7 text-[#68746d]">A simple place for students to discover books and for staff to keep the collection organized.</p>
-			<div class="mt-8 flex flex-wrap gap-3">
-				<a routerLink="/login" class="inline-flex min-h-12 items-center justify-center rounded bg-[#1d5b4b] px-5 text-sm font-semibold text-[#fffefa] transition hover:bg-[#164b3d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]">Login</a>
-				<a routerLink="/register" class="inline-flex min-h-12 items-center justify-center rounded border border-[#1d5b4b] bg-[#fffefa] px-5 text-sm font-semibold text-[#1d5b4b] transition hover:bg-[#d7eee6] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]">Register</a>
-			</div>
+			@if (!isLoggedIn()) {
+				<div class="mt-8 flex flex-wrap gap-3">
+					<a routerLink="/login" class="inline-flex min-h-12 items-center justify-center rounded bg-[#1d5b4b] px-5 text-sm font-semibold text-[#fffefa] transition hover:bg-[#164b3d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]">Login</a>
+					<a routerLink="/register" class="inline-flex min-h-12 items-center justify-center rounded border border-[#1d5b4b] bg-[#fffefa] px-5 text-sm font-semibold text-[#1d5b4b] transition hover:bg-[#d7eee6] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dc8a57]">Register</a>
+				</div>
+			}
 		</div>
 		<aside class="hidden items-end justify-end lg:flex" aria-hidden="true">
 			<div class="w-full max-w-xs border-l-4 border-[#ba573f] bg-[#fffefa] p-6">

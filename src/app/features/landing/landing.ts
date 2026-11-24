@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
 	selector: 'app-landing',
@@ -7,4 +8,10 @@ import { RouterLink } from '@angular/router';
 	imports: [RouterLink],
 	templateUrl: './landing.html',
 })
-export class Landing {}
+export class Landing {
+  constructor(private authService: AuthService) {}
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+}
