@@ -8,8 +8,8 @@ import { BookService } from '../../../services/book.service';
   selector: 'app-student-books',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './books.html',
-  styleUrl: './books.css',
+  templateUrl: './browse-books.html',
+  styleUrl: './browse-books.css',
 })
 export class StudentBooks implements OnInit {
   readonly fallbackImageUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
@@ -21,6 +21,9 @@ export class StudentBooks implements OnInit {
   books: Book[] = [];
   loading = false;
   errorMessage = '';
+  requestSuccessMessage = '';
+  requestErrorMessage = '';
+  requestingBookId: number | null = null;
 
   constructor(
     private bookService: BookService,
@@ -66,6 +69,30 @@ export class StudentBooks implements OnInit {
 
   clearSearch(): void {
     this.searchControl.setValue('');
+  }
+
+  requestBook(book: Book): void {
+    if (book.id === undefined || book.quantity <= 0 || this.requestingBookId !== null) {
+      return;
+    }
+
+    this.requestingBookId = book.id;
+    this.requestSuccessMessage = '';
+    this.requestErrorMessage = '';
+
+    this.bookService.requestStudentBook({ bookId: book.id, quantity: 1 }).subscribe({
+      next: () => {
+        this.requestSuccessMessage = `Your request for "${book.title}" was submitted.`;
+        this.requestingBookId = null;
+        this.changeDetectorRef.markForCheck();
+      },
+      error: (error) => {
+        this.requestErrorMessage = `Unable to request "${book.title}". Please try again.`;
+        this.requestingBookId = null;
+        console.error(error);
+        this.changeDetectorRef.markForCheck();
+      },
+    });
   }
 
   onImageError(event: Event): void {

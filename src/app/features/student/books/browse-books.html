@@ -6,6 +6,18 @@
       <p class="mt-2 max-w-2xl text-sm leading-6 text-stone-600">Discover books available in the Campus Library.</p>
     </div>
 
+    @if (requestSuccessMessage) {
+      <p class="mb-5 border-l-4 border-emerald-700 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900" role="status">
+        {{ requestSuccessMessage }}
+      </p>
+    }
+
+    @if (requestErrorMessage) {
+      <p class="mb-5 border-l-4 border-red-700 bg-red-50 px-4 py-3 text-sm font-medium text-red-900" role="alert">
+        {{ requestErrorMessage }}
+      </p>
+    }
+
     <div class="mb-6 flex flex-col gap-3 rounded-lg border border-stone-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center">
       <div class="relative flex-1">
         <input
@@ -86,6 +98,20 @@
                   <span class="font-bold text-stone-900">{{ book.quantity }}</span>
                   {{ book.quantity === 1 ? 'copy' : 'copies' }} available
                 </p>
+                <button
+                  type="button"
+                  (click)="requestBook(book)"
+                  [disabled]="book.quantity <= 0 || requestingBookId !== null"
+                  class="mt-4 min-h-10 w-full rounded-md bg-emerald-900 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 disabled:cursor-not-allowed disabled:bg-stone-300 disabled:text-stone-600"
+                >
+                  @if (requestingBookId === book.id) {
+                    Sending request...
+                  } @else if (book.quantity <= 0) {
+                    Out of Stock
+                  } @else {
+                    Request Book
+                  }
+                </button>
               </div>
             </div>
           </article>
