@@ -6,18 +6,20 @@ import { AuthService } from '../../services/auth.service';
 export const roleGuard: CanActivateFn = (route) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const expectedRole = route.data['role'] as UserRole | undefined;
-  const actualRole = authService.getUserRole();
 
   if (!authService.isLoggedIn()) {
-    router.navigate(['/login']);
-    return false;
+    return router.createUrlTree(['/login']);
   }
 
+  const actualRole = authService.getUserRole();
+  if (!actualRole) {
+    return router.createUrlTree(['/login']);
+  }
+
+  const expectedRole = route.data['role'] as UserRole | undefined;
   if (expectedRole && actualRole !== expectedRole) {
     const fallbackRoute = actualRole === 'ADMIN' ? '/admin/dashboard' : '/student/dashboard';
-    router.navigate([fallbackRoute]);
-    return false;
+    return router.createUrlTree([fallbackRoute]);
   }
 
   return true;

@@ -26,6 +26,10 @@ export class BookService {
     return this.http.get<Book[]>(this.studentApiUrl);
   }
 
+  requestStudentBook(request: { bookId: number; quantity: number }): Observable<unknown> {
+    return this.http.post<unknown>(`${environment.apiUrl}/student/book-requests`, request);
+  }
+
   // Get All Books
   getAllBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl);
