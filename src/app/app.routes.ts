@@ -62,5 +62,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/admin/issued-books/issued-books').then((module) => module.IssuedBooks),
   },
+  {
+    path: 'admin/book-requests',
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'ADMIN' },
+    loadComponent: () =>
+      import('./features/admin/book-requests/book-requests').then((module) => module.AdminBookRequests),
+  },
   { path: '**', redirectTo: '' },
 ];

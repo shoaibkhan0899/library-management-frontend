@@ -19,6 +19,7 @@ import { AuthService } from '../../../services/auth.service';
             <a routerLink="/admin/dashboard" routerLinkActive="bg-white/10" [routerLinkActiveOptions]="{ exact: true }" class="flex items-center rounded-xl px-3 py-2 text-sm font-medium text-emerald-50 transition hover:bg-white/10">Overview</a>
             <a routerLink="/admin/books" routerLinkActive="bg-white/10" class="flex items-center rounded-xl px-3 py-2 text-sm font-medium text-emerald-50 transition hover:bg-white/10">Manage books</a>
             <a routerLink="/admin/issued-books" routerLinkActive="bg-white/10" class="flex items-center rounded-xl px-3 py-2 text-sm font-medium text-emerald-50 transition hover:bg-white/10">Issued books</a>
+            <a routerLink="/admin/book-requests" routerLinkActive="bg-white/10" class="flex items-center rounded-xl px-3 py-2 text-sm font-medium text-emerald-50 transition hover:bg-white/10">Book requests</a>
           </nav>
 
           <button type="button" (click)="logout()" class="mt-8 w-full rounded-xl border border-white/20 bg-white/5 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/10">Logout</button>
