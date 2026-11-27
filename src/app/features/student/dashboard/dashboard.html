@@ -19,20 +19,42 @@
     <main class="flex-1 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
       <p class="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-700">Welcome</p>
       <h2 class="mt-3 text-3xl font-bold text-stone-900">Student dashboard</h2>
-      <p class="mt-3 max-w-2xl text-stone-600">Check your books, book requests, and library activity in one dashboard.</p>
+      <p class="mt-3 max-w-2xl text-stone-600">Check your borrowed books, pending book requests, and due dates in one dashboard.</p>
 
       <div class="mt-8 grid gap-4 md:grid-cols-3">
-        <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
-          <p class="text-sm text-stone-500">Issued</p>
-          <p class="mt-2 text-3xl font-bold text-stone-900">00</p>
-        </div>
-        <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
-          <p class="text-sm text-stone-500">Pending requests</p>
-          <p class="mt-2 text-3xl font-bold text-stone-900">00</p>
-        </div>
-        <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
-          <p class="text-sm text-stone-500">Due soon</p>
-          <p class="mt-2 text-3xl font-bold text-stone-900">00</p>
+        <a routerLink="/student/my-books" class="block rounded-2xl border border-stone-200 bg-stone-50 p-5 transition hover:bg-stone-100">
+          <p class="text-sm font-medium text-stone-500">Currently Issued</p>
+          <p class="mt-2 text-3xl font-bold text-stone-900">{{ loading ? '...' : issuedCount }}</p>
+          <span class="mt-2 inline-block text-xs font-semibold text-emerald-700">View borrowed books &rarr;</span>
+        </a>
+
+        <a routerLink="/student/my-requests" class="block rounded-2xl border border-stone-200 bg-stone-50 p-5 transition hover:bg-stone-100">
+          <p class="text-sm font-medium text-stone-500">Pending Requests</p>
+          <p class="mt-2 text-3xl font-bold text-amber-700">{{ loading ? '...' : pendingRequestsCount }}</p>
+          <span class="mt-2 inline-block text-xs font-semibold text-emerald-700">Track requests &rarr;</span>
+        </a>
+
+        <a routerLink="/student/my-books" class="block rounded-2xl border border-stone-200 bg-stone-50 p-5 transition hover:bg-stone-100">
+          <p class="text-sm font-medium text-stone-500">Due Soon / Overdue</p>
+          <p class="mt-2 text-3xl font-bold" [class.text-red-700]="dueSoonCount > 0" [class.text-stone-900]="dueSoonCount === 0">
+            {{ loading ? '...' : dueSoonCount }}
+          </p>
+          <span class="mt-2 inline-block text-xs font-semibold text-emerald-700">Check due dates &rarr;</span>
+        </a>
+      </div>
+
+      <div class="mt-8 rounded-2xl border border-stone-200 bg-emerald-50/50 p-6">
+        <h3 class="text-base font-semibold text-emerald-950">Quick Actions</h3>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a routerLink="/student/books" class="inline-flex items-center rounded-xl bg-emerald-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+            Browse Library Catalog
+          </a>
+          <a routerLink="/student/my-requests" class="inline-flex items-center rounded-xl border border-emerald-800 bg-white px-4 py-2.5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-50">
+            My Requests ({{ pendingRequestsCount }})
+          </a>
+          <a routerLink="/student/my-books" class="inline-flex items-center rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-800 transition hover:bg-stone-50">
+            My Borrowed Books
+          </a>
         </div>
       </div>
     </main>
