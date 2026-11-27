@@ -4,6 +4,7 @@ export interface BookIssue {
   id: number;
   userId: number;
   userName: string;
+  userEmail: string;
   bookId: number;
   bookTitle: string;
   quantity: number;

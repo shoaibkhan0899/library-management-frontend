@@ -8,104 +8,108 @@
           <p class="mt-2 text-sm text-stone-600">Review issue records and record returned books.</p>
         </div>
         @if (!loading && !errorMessage) {
-          <p class="text-sm text-stone-500">{{ issues.length }} {{ issues.length === 1 ? 'record' : 'records' }}</p>
+        <p class="text-sm text-stone-500">{{ issues.length }} {{ issues.length === 1 ? 'record' : 'records' }}</p>
         }
       </div>
     </div>
 
-    <div class="mb-6 border-l-4 border-amber-500 bg-amber-50 px-4 py-3 text-sm text-amber-900" role="note">
-      Book issuing from this page is not available yet because the backend does not provide an endpoint to list students for the selector.
-    </div>
+
 
     @if (successMessage) {
-      <p class="mb-5 border-l-4 border-emerald-700 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900" role="status">
-        {{ successMessage }}
-      </p>
+    <p class="mb-5 border-l-4 border-emerald-700 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900"
+      role="status">
+      {{ successMessage }}
+    </p>
     }
 
     @if (errorMessage) {
-      <div class="mb-5 flex flex-col gap-3 border-l-4 border-red-700 bg-red-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between" role="alert">
-        <p class="text-sm font-medium text-red-900">{{ errorMessage }}</p>
-        <button type="button" (click)="loadIssues()" class="min-h-9 self-start rounded-md border border-red-300 bg-white px-3 text-sm font-semibold text-red-800 hover:bg-red-100 sm:self-auto">Try again</button>
-      </div>
+    <div
+      class="mb-5 flex flex-col gap-3 border-l-4 border-red-700 bg-red-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+      role="alert">
+      <p class="text-sm font-medium text-red-900">{{ errorMessage }}</p>
+      <button type="button" (click)="loadIssues()"
+        class="min-h-9 self-start rounded-md border border-red-300 bg-white px-3 text-sm font-semibold text-red-800 hover:bg-red-100 sm:self-auto">Try
+        again</button>
+    </div>
     }
 
     <section class="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
       @if (loading) {
-        <div class="px-6 py-14 text-center text-sm font-medium text-stone-500" role="status">Loading issue records...</div>
+      <div class="px-6 py-14 text-center text-sm font-medium text-stone-500" role="status">Loading issue records...
+      </div>
       } @else if (issues.length === 0 && !errorMessage) {
-        <div class="px-6 py-14 text-center">
-          <h2 class="text-base font-semibold text-stone-800">No issued books yet</h2>
-          <p class="mt-2 text-sm text-stone-500">Issue records will appear here when available.</p>
-        </div>
+      <div class="px-6 py-14 text-center">
+        <h2 class="text-base font-semibold text-stone-800">No issued books yet</h2>
+        <p class="mt-2 text-sm text-stone-500">Issue records will appear here when available.</p>
+      </div>
       } @else {
-        @if (bookDetailsUnavailable) {
-          <p class="border-b border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Book author and ISBN details could not be loaded. The issue records are still shown.
-          </p>
-        }
+      @if (bookDetailsUnavailable) {
+      <p class="border-b border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+        Book author and ISBN details could not be loaded. The issue records are still shown.
+      </p>
+      }
 
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[1450px] border-collapse text-left">
-            <thead class="border-b border-stone-200 bg-stone-50">
-              <tr>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Issue ID</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Student</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Student Email</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Book</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Author</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">ISBN</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Quantity</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Issue Date</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Due Date</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Return Date</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Status</th>
-                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Action</th>
-              </tr>
-            </thead>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[1450px] border-collapse text-left">
+          <thead class="border-b border-stone-200 bg-stone-50">
+            <tr>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Issue ID</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Student</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Student Email</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Book</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Author</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">ISBN</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Quantity</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Issue Date</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Due Date</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Return Date</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Status</th>
+              <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Action</th>
+            </tr>
+          </thead>
 
-            <tbody class="divide-y divide-stone-200">
-              @for (issue of issues; track issue.id) {
-                <tr class="transition-colors hover:bg-stone-50">
-                  <td class="px-4 py-3 text-sm text-stone-500">{{ issue.id }}</td>
-                  <td class="px-4 py-3 text-sm font-medium text-stone-900">
-                    {{ issue.userName }}
-                    <span class="mt-1 block text-xs text-stone-500">User #{{ issue.userId }}</span>
-                  </td>
-                  <td class="px-4 py-3 text-sm text-stone-500">Not provided by API</td>
-                  <td class="px-4 py-3 text-sm font-semibold text-stone-900">{{ issue.bookTitle }}</td>
-                  <td class="px-4 py-3 text-sm text-stone-700">{{ getBookDetails(issue.bookId)?.author || 'Not available' }}</td>
-                  <td class="px-4 py-3 text-sm text-stone-700">{{ getBookDetails(issue.bookId)?.isbn || 'Not available' }}</td>
-                  <td class="px-4 py-3 text-sm font-medium text-stone-700">{{ issue.quantity }}</td>
-                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.issueDate }}</td>
-                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.dueDate }}</td>
-                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.returnDate || '—' }}</td>
-                  <td class="px-4 py-3">
-                    @if (issue.status === 'ISSUED') {
-                      <span class="inline-flex rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-800">ISSUED</span>
-                    } @else {
-                      <span class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800">RETURNED</span>
-                    }
-                  </td>
-                  <td class="px-4 py-3">
-                    @if (issue.status === 'ISSUED') {
-                      <button
-                        type="button"
-                        (click)="returnBook(issue)"
-                        [disabled]="returningIssueId !== null"
-                        class="min-h-9 whitespace-nowrap rounded-md border border-emerald-800 px-3 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        {{ returningIssueId === issue.id ? 'Returning...' : 'Mark returned' }}
-                      </button>
-                    } @else {
-                      <span class="text-sm text-stone-400">Complete</span>
-                    }
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+          <tbody class="divide-y divide-stone-200">
+            @for (issue of issues; track issue.id) {
+            <tr class="transition-colors hover:bg-stone-50">
+              <td class="px-4 py-3 text-sm text-stone-500">{{ issue.id }}</td>
+              <td class="px-4 py-3 text-sm font-medium text-stone-900">
+                {{ issue.userName }}
+                <span class="mt-1 block text-xs text-stone-500">User #{{ issue.userId }}</span>
+              </td>
+              <td class="px-4 py-3 text-sm text-stone-500">{{ issue.userEmail || 'Not available' }}</td>
+              <td class="px-4 py-3 text-sm font-semibold text-stone-900">{{ issue.bookTitle }}</td>
+              <td class="px-4 py-3 text-sm text-stone-700">{{ getBookDetails(issue.bookId)?.author || 'Not available' }}
+              </td>
+              <td class="px-4 py-3 text-sm text-stone-700">{{ getBookDetails(issue.bookId)?.isbn || 'Not available' }}
+              </td>
+              <td class="px-4 py-3 text-sm font-medium text-stone-700">{{ issue.quantity }}</td>
+              <td class="px-4 py-3 text-sm text-stone-700">{{ issue.issueDate }}</td>
+              <td class="px-4 py-3 text-sm text-stone-700">{{ issue.dueDate }}</td>
+              <td class="px-4 py-3 text-sm text-stone-700">{{ issue.returnDate || '—' }}</td>
+              <td class="px-4 py-3">
+                @if (issue.status === 'ISSUED') {
+                <span
+                  class="inline-flex rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-800">ISSUED</span>
+                } @else {
+                <span
+                  class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800">RETURNED</span>
+                }
+              </td>
+              <td class="px-4 py-3">
+                @if (issue.status === 'ISSUED') {
+                <button type="button" (click)="returnBook(issue)" [disabled]="returningIssueId !== null"
+                  class="min-h-9 whitespace-nowrap rounded-md border border-emerald-800 px-3 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-50">
+                  {{ returningIssueId === issue.id ? 'Returning...' : 'Mark returned' }}
+                </button>
+                } @else {
+                <span class="text-sm text-stone-400">Complete</span>
+                }
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
       }
     </section>
   </section>
