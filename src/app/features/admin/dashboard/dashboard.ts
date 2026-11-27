@@ -32,15 +32,15 @@ import { AuthService } from '../../../services/auth.service';
           <div class="mt-8 grid gap-4 md:grid-cols-3">
             <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
               <p class="text-sm text-stone-500">Books</p>
-              <p class="mt-2 text-3xl font-bold text-stone-900">120</p>
+              <p class="mt-2 text-3xl font-bold text-stone-900">00</p>
             </div>
             <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
               <p class="text-sm text-stone-500">Issued</p>
-              <p class="mt-2 text-3xl font-bold text-stone-900">34</p>
+              <p class="mt-2 text-3xl font-bold text-stone-900">00</p>
             </div>
             <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
               <p class="text-sm text-stone-500">Members</p>
-              <p class="mt-2 text-3xl font-bold text-stone-900">420</p>
+              <p class="mt-2 text-3xl font-bold text-stone-900">00</p>
             </div>
           </div>
         </main>

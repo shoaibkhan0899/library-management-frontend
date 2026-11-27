@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
-import { roleGuard } from './core/guards/role.guard';
+import {roleGuard} from './core/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -27,7 +27,8 @@ export const routes: Routes = [
     path: 'student/books',
     canActivate: [authGuard, roleGuard],
     data: { role: 'STUDENT' },
-    loadComponent: () => import('./features/student/books/books').then((module) => module.StudentBooks),
+    loadComponent: () =>
+      import('./features/student/books/browse-books').then((module) => module.StudentBooks),
   },
   {
     path: 'student/my-books',
@@ -36,11 +37,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/student/my-books/my-books').then((module) => module.MyBooks),
   },
   {
-    path: 'student/reservations',
+    path: 'student/my-requests',
     canActivate: [authGuard, roleGuard],
     data: { role: 'STUDENT' },
     loadComponent: () =>
-      import('./features/student/reservations/reservations').then((module) => module.Reservations),
+      import('./features/student/my-requests/my-requests').then((module) => module.MyRequests),
   },
   {
     path: 'admin/dashboard',
