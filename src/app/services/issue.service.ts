@@ -7,6 +7,7 @@ import { BookIssue } from '../models/book-issue.model';
 @Injectable({ providedIn: 'root' })
 export class IssueService {
 	private readonly apiUrl = `${environment.apiUrl}/admin/book-issues`;
+	private readonly studentApiUrl = `${environment.apiUrl}/student/book-issues`;
 
 	constructor(private http: HttpClient) {}
 
@@ -16,5 +17,9 @@ export class IssueService {
 
 	returnBookIssue(issueId: number): Observable<BookIssue> {
 		return this.http.post<BookIssue>(`${this.apiUrl}/${issueId}/return`, null);
+	}
+
+	getStudentMyIssues(): Observable<BookIssue[]> {
+		return this.http.get<BookIssue[]>(`${this.studentApiUrl}/my`);
 	}
 }

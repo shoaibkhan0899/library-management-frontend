@@ -1,6 +1,83 @@
-<main class="min-h-[calc(100vh-73px)] bg-stone-100 px-4 py-8 sm:px-6 lg:px-8">
+<main class="min-h-[calc(100vh-73px)] bg-stone-100 px-4 py-8 text-stone-900 sm:px-6 lg:px-8">
   <section class="mx-auto max-w-7xl">
-    <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">My library</p>
-    <h1 class="mt-2 text-3xl font-bold text-stone-900">My Books</h1>
+    <div class="mb-6">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">My library</p>
+      <div class="mt-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-stone-900">My Books</h1>
+          <p class="mt-2 text-sm text-stone-600">View your currently borrowed books, due dates, and return history.</p>
+        </div>
+        @if (!loading && !errorMessage) {
+          <p class="text-sm text-stone-500">
+            {{ issues.length }} {{ issues.length === 1 ? 'record' : 'records' }}
+            @if (issuedCount() > 0) {
+              &nbsp;&middot;&nbsp;
+              <span class="font-semibold text-amber-700">{{ issuedCount() }} currently issued</span>
+            }
+          </p>
+        }
+      </div>
+    </div>
+
+    @if (errorMessage) {
+      <div class="mb-5 flex flex-col gap-3 border-l-4 border-red-700 bg-red-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between" role="alert">
+        <p class="text-sm font-medium text-red-900">{{ errorMessage }}</p>
+        <button type="button" (click)="loadMyBooks()" class="min-h-9 self-start rounded-md border border-red-300 bg-white px-3 text-sm font-semibold text-red-800 hover:bg-red-100 sm:self-auto">
+          Try again
+        </button>
+      </div>
+    }
+
+    <section class="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+      @if (loading) {
+        <div class="px-6 py-14 text-center text-sm font-medium text-stone-500" role="status">
+          Loading your books...
+        </div>
+      } @else if (issues.length === 0 && !errorMessage) {
+        <div class="px-6 py-14 text-center">
+          <h2 class="text-base font-semibold text-stone-800">No books issued yet</h2>
+          <p class="mt-2 text-sm text-stone-500">Once your book request is approved by an admin, it will appear here.</p>
+          <a routerLink="/student/books" class="mt-4 inline-flex min-h-10 items-center rounded-md bg-emerald-800 px-4 text-sm font-semibold text-white transition hover:bg-emerald-700">
+            Browse books
+          </a>
+        </div>
+      } @else {
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[820px] border-collapse text-left">
+            <thead class="border-b border-stone-200 bg-stone-50">
+              <tr>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Issue ID</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Book</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Quantity</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Issue Date</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Due Date</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Return Date</th>
+                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wide text-stone-600">Status</th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-stone-200">
+              @for (issue of issues; track issue.id) {
+                <tr class="transition-colors hover:bg-stone-50">
+                  <td class="px-4 py-3 text-sm text-stone-500">{{ issue.id }}</td>
+                  <td class="px-4 py-3 text-sm font-semibold text-stone-900">{{ issue.bookTitle }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.quantity }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.issueDate }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.dueDate }}</td>
+                  <td class="px-4 py-3 text-sm text-stone-700">{{ issue.returnDate || '—' }}</td>
+                  <td class="px-4 py-3">
+                    @if (issue.status === 'ISSUED') {
+                      <span class="inline-flex rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-800">ISSUED</span>
+                    } @else {
+                      <span class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800">RETURNED</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
   </section>
 </main>
